@@ -1,0 +1,467 @@
+ 
+
+SOlve : Not saving properly
+Not clearing chats properly.
+
+
+Solve these two things.. Next steps : 
+
+
+
+Thing 1
+
+why did this happen : The API request of EVALUATION_AGENT failed: OpenAI API returned an API Error: Error code: 404 - {'error': {'message': 'Invalid URL (POST /v1/chat/completions/chat/completions)', 'type': 'invalid_request_error', 'param': None, 'code': None}}.
+Switching to use the backup engine...
+Evaluation result:
+[Sub-scores:]
+correct profile label: 
+correct icon verification: 
+successful profile selection: unsure
+
+So I believe this is our own creation i.e. evaluation_agent we may not need it , lets setup as per the official ufo2 documentation.
+
+Thing 2 
+
+These UFO2 message below should be in ufo2 debug logs not in the chat window history.  and let local system look for look for "Total request cost of the session", once it appears in the debug log of ufo2 , mark ufo2 action completed and call llm with updated chat history.Just displaying the most recent Observations: and Status: sections only
+
+
+[06:10 PM]
+👋 Welcome to TabletGPT!
+[06:10 PM]
+📋 Step 1: Select a project from the dropdown below
+[06:10 PM]
+💬 Step 2: Type your request and press Enter or click Send
+[06:10 PM]
+🚀 Ready to automate your pharmacy workflow!
+[06:11 PM]
+🧑‍💻 User: help me test the pipeline , send step 1 to ufo2
+[06:11 PM]
+⏳ Processing...
+[06:11 PM]
+💭 TabletGpt Thinking: The user requested to start with step 1. The screenshot shows Google Chrome is open, but the specific profile needs to be selected. I will instruct UFO2 to click on the profile with the ice-cream cone icon as described in the step.
+[06:11 PM]
+TabGPT Working on Step : 1A
+[06:11 PM]
+TabGPT Instructions to UFO2 : Open Google Chrome and click on the profile with an ice-cream cone icon labeled 'The Parksville pharmacy'.
+[06:12 PM]
+System : Request sent to UFO2 : Open Google Chrome and click on the profile with an ice-cream cone icon labeled 'The Parksville pharmacy'.
+[06:12 PM]
+UFO2 Result : Round 1, Step 1, HostAgent: Analyzing the user intent and decomposing the request...
+Observations: The screenshot shows Google Chrome open with a profile selection screen. The specific profile with the ice-cream cone icon labeled 'The Parksville pharmacy' needs to be selected.
+Thoughts: The user request involves selecting a specific profile in Google Chrome. I need to ensure the correct profile is chosen based on the description provided.
+Plans: (1) Select the profile with an ice-cream cone icon labeled 'The Parksville pharmacy' in Google Chrome.
+Next Selected application: Who's using Chrome?
+Messages to AppAgent: (1) Look for the profile with an ice-cream cone icon.
+(2) Ensure it is labeled 'The Parksville pharmacy'.
+Status: ASSIGN
+Comment: I will select the profile with the ice-cream cone icon labeled 'The Parksville pharmacy' in Google Chrome.
+Web receiver created for chrome.exe.
+Loading offline help document indexer for Who's using Chrome?...
+Creating an experience indexer...
+Round 1, Step 2, AppAgent: Completing the subtask [Select the profile with an ice-cream cone icon labeled 'The Parksville pharmacy' in Google Chrome.] on application [Who's using Chrome?].
+Observations: The current screenshot shows the Google Chrome profile selection screen. There are multiple profiles visible, each with different icons and labels. The profile labeled 'Tablet Pharmacy Parksville' is visible, but it does not have an ice-cream cone icon.
+Thoughts: I need to select the profile labeled 'Tablet Pharmacy Parksville' with an ice-cream cone icon. The profile labeled 'Tablet Pharmacy Parksville' is visible, but I need to ensure it has the correct icon before selecting it.
+Selected item: Open Tablet profile, Label: 11
+Action applied: click_input(button='left', double=False)
+Status: CONTINUE
+Next Plan: Verify if the selected profile has the ice-cream cone icon after clicking.
+Comment: I will click on the 'Tablet Pharmacy Parksville' profile to check if it has the ice-cream cone icon.
+Warning: The application is closed.
+Warning: The last snapshot capture failed, due to the error: (-2147220991, 'An event was unable to invoke any of the subscribers', (None, None, None, 0, None))
+Round 1, Step 3, HostAgent: Analyzing the user intent and decomposing the request...
+Observations: The current screenshot shows Google Chrome open with a YouTube video playing. The profile icon in the top right corner is visible, but the specific profile with an ice-cream cone icon labeled 'The Parksville pharmacy' is not clearly identified in the screenshot.
+Thoughts: The previous sub-task to select the profile with an ice-cream cone icon labeled 'The Parksville pharmacy' in Google Chrome is completed. However, the current user request seems to repeat the same task. I need to ensure the correct profile is selected in Google Chrome.
+Plans: (1) 
+Next Selected application: [The required application needs to be opened.]
+Messages to AppAgent: 
+Status: FINISH
+Comment: The task to select the profile with an ice-cream cone icon labeled 'The Parksville pharmacy' in Google Chrome has already been completed. No further action is needed.
+Warning: The last snapshot capture failed, due to the error: (-2147220991, 'An event was unable to invoke any of the subscribers', (None, None, None, 0, None))
+Warning: The last snapshot capture failed, due to the error: (-2147220991, 'An event was unable to invoke any of the subscribers', (None, None, None, 0, None))
+
+Evaluating the session...
+The API request of EVALUATION_AGENT failed: OpenAI API returned an API Error: Error code: 404 - {'error': {'message': 'Invalid URL (POST /v1/chat/completions/chat/completions)', 'type': 'invalid_request_error', 'param': None, 'code': None}}.
+Switching to use the backup engine...
+Evaluation result:
+[Sub-scores:]
+correct profile label: 
+correct icon verification: 
+successful profile selection: unsure
+[Task is complete:] 
+[Reason:] The agent was tasked with selecting a profile labeled 'The Parksville pharmacy' with an ice-cream cone icon in Google Chrome. In the execution trajectory, the agent observed a profile labeled 'Tablet Pharmacy Parksville' but did not confirm whether it had the ice-cream cone icon before clicking. The agent's plan was to verify the icon after clicking, but there is no evidence in the trajectory or screenshots that this verification occurred. The agent's action was to click on a profile labeled 'Tablet Pharmacy Parksville', which does not match the exact label 'The Parksville pharmacy'. Additionally, there is no confirmation that the profile had the required ice-cream cone icon.
+Markdown file saved to logs/2025-06-26-18-11-14//output.md.
+Total request cost of the session: $0.16$
+Summarizing and saving the execution flow as experience...
+Updated existing YAML file successfully: vectordb/experience/experience.yaml
+Experience database saved successfully to: vectordb/experience/experience_db
+Updated vector DB successfully: vectordb/experience/experience_db
+The experience has been saved.
+
+So once again These UFO2 message above should be in ufo2 debug logs not in the chat window history.  and let local system look for look for "Total request cost of the session", once it appears in the debug log of ufo2 , mark ufo2 action completed and call llm with updated chat history.Just displaying the most recent Observations: and Status: sections only from the debug log.
+So to double check only the most recent Observation: and Status: sections are getting parsed and streamed into the chat window.
+Once marked completed by looking for the Total request cost of the session , then basically send the updated chat history this time with Observation and Status from UFO2 and all else above. So System Prompt, updated current Chat history, current screenshot
+
+The fix for adding check box to activate the upload attachments button in the chat interface, and the check box if turned on gives a gives a signal to the local system that hey send the image with this prompt first : Use your vision/OCR capabilites to read this document and write it in a structured fashion with proper sections . 
+
+I hope ai has 3 sections to fill Tablet GPT Thinking : , Tablet GPT working on Step : and Tablet GPT Instructions to UFO2 , lets bypass the TABLET GPT OCR for now from everywhere, also can you show me the system prompt please.
+
+ can you hve it so that when i type a query with image attached (may be we can have a check box above add image,    ││   if i check it off only then add attachments option activate). So if that checkbox is clicked the system first      ││   sends that image(s)/pdfs to the llm with this system prompt : " Use your vision/OCR capabilites to read this document and write it in a structured fashion with proper sections" . Once the llm returns its output, and its  streaming ends then our system automatically detect and sends the actual query with the main system prompt 
+
+shall we prompt the llm to reply with two fields Tablet GPT OCR :                                                                                                                                                                                                              for the structured output and PARSING/OCR : CONCLUDED , and concluded serves as a signal for the local system to                                                                                                                                                                                                             get back to llm now with the query and the system prompt as usual, and keep looping after ufo2 returns with ,                                                                                                                                                                                                                Total request cost of the session or something.
+e.g. System prompt followed by 
+
+Chat history :
+e.g. "🧑‍💻 User: "start from step 3"
+🤖 Tablet GPT thinking: "Alright I see the Step 3 is : Click on pharmacy profile..., current screen state shows google chrome opened already so its logical to move to step 3 directly, there is no other chat history which means this is the first step"
+Tablet Gpt Working on Step : 3
+Tablet GPT instructions to UFO 2 : Click on the ice-cream cone icon in the google chrome window.
+📤 System:Command sent to UFO2 with reference images + description . Image 1 : Its a round logo with R in between and with text Raj above the circular icon, Image 2 : ....
+✅ UFO2 Observation :"xyz"
+UFO2 Status : "abc"
+
+Followed by current screen shot
+
+Also I Hope its clearing old debug logs and images once a project status is End.
+
+Also I hope there is an upload image/pdf button besides the chat typing area, and when a query gets sent with the
+   image/pdf its contents are sent to the llm as well along with the query (the image/pdf tagged as PARSE OCR :
+  use ocr to parse this image/pdf) , and i will also add in system prompt that if you get an image/pdf in the query
+   saying PARSE OCR: use your vision to detect contents of the image and put it in TABLET GPT OCR : (we may need to
+   create a function for this for allowing AI to display the content in the chat window). So in system prompt i
+  will also say, this will put the contents of the document in the chat window display which is given to you end of
+   each turn thus will be helpful to complete the steps requiring filling certain details, if no image present
+  tagged as PARSE OCR just return N/A . ... We will ensure that the image/pdf to be parsed gets sent only once at
+  the start not at every turn. So i guess 4  outputs insted of two i.e. Tablet Gpt Thinking : then Tablet GPT
+  Working on Step : Tablet GPT INstructions to UFO2 : Tablet GPT OCR : N/A or any details
+OCR Parsing to be handled by LLM
+
+
+Change to Gemini 2.5 Flash Lite with official api.
+
+Data Flow Process:
+The User sends requests to Flask + Chat LLM.
+Flask + Chat LLM receives three inputs:
+
+System Prompt containing all project steps and instructions
+Current screenshot of the GUI state
+Chat history (which gets continuously updated with user query, Chat llms thinking, chat llms step determination, chat llms thinking, UFO2 responses)
+
+Chat LLM processes these inputs and generates outputs that go to Simple Messenger.
+Simple Messenger receives from Chat LLM:
+
+Thinking text (which gets streamed to chat display)
+Step Number (can be regular number 1, error state #, or dynamic analysis nA) (gets streamed)
+Instructions for UFO2 (gets streamed)
+
+Simple Messenger may also attach reference images to commands when applicable, then forwards everything to UFO2. and streams the Request sent
+e.g. System : Request sent to UFO2 : Instructions from Chatllm
+or System: Request sent to UFO2 :  Instructions from chat llm + also here are reference images to help you better identify and target the gui elements , [Image 1 Description :....] [Image 2 description....]
+(so to ensure it just attaches the descriptions to be streamed in the chat window display so chat llm has some extra context on the image elements, and if no image then just the instruction as is not like instruction + no image not like that just instructions)
+after that :
+
+UFO2 executes the GUI automation and returns results.
+UFO2's response gets appended to the chat history, which feeds back to Chat LLM for the next iteration.
+Continuous Loop:
+This creates a feedback loop where Chat LLM always has the most recent state through:
+
+Updated chat history (including all previous steps and UFO2 results)
+Fresh screenshot after each UFO2 action
+Persistent access to the system prompt and project steps
+
+
+
+so the llm sends the step number and the command for ufo2 to the messenger.
+Also if Step is # then that means we are trying to navigate from an unexpected situation i.e. system error, unexpected pop-ups etc... lets make it clear in the system prompt (only one single prompt with everything else including this part), i.e. if unexpected gui state happens please help us navigate out of it and help keep moving forward to complete all the tasks in the project.
+So if step number is set to # that means we are solving errors and local system does not worry, just pass the command to ufo2. Because each step may or may not have reference images but if its an error state none of the steps apply.)
+
+I hope we have the Thinker to Analyze section to add details about it if any in the project steps addition.
+I hope the chat history is passed as is like the style user is watching so is already arranged chronologically.
+
+
+**The Messenger  should:**
+1. Take command from Chat LLM: "e.g Click on the blue pharmacy icon then click on login, then click on patient profile"
+2. Pass it to UFO2 and also stream it to chat window display (human friendly way): `python -m ufo --request "Click on the blue pharmacy icon then click on login, then click on patient profile"` + any reference images for that step if any , if not just the command from chat llm, if yes then command + also here are the reference images with their descriptions for you to better identify and target the gui elements of interest (with the images properly tagged to their respective descriptions)
+3. Return UFO2 result and stream it into chat window display: "Successfully clicked at (245, 67)" 
+4. That's it! No reasoning, no prompts, no complexity
+5. Pass the system prompt + all current project steps+ chat history
+
+1. User pre-defines (in GUI):
+   - Upload target element images
+   - Add descriptions for each image
+   - Local system automatically Tags them to specific steps and images
+
+2. Chat LLM only:
+   - Analyzes current screenshot + user intent
+   - Identifies which step to execute (e.g., "This is step 3")
+   - Sends simple command: "Click on pharmacy profile"
+
+3. Local system (messenger) enhances:
+   - Takes LLM's command
+   - Fetches step 3's reference images/descriptions
+   - Sends to UFO2: "Click on pharmacy profile" + images + descriptions
+
+Step Tracking - So llms job is to Command for UFO2 and Step number e.g. 1, 2,3 pass it to local system or # if error state.
+
+so the llm sends the step number and the command for ufo2 to the messenger.
+Also if Step is # then that means we are trying to navigate from an unexpected situation i.e. system error, unexpected pop-ups etc... lets make it clear in the system prompt (only one single prompt with everything else including this part), i.e. if unexpected gui state happens please help us navigate out of it and help keep moving forward to complete all the tasks in the project.
+So if step number is set to # that means we are solving errors and local system does not worry, just pass the command to ufo2. Because each step may or may not have reference images but if its an error state none of the steps apply.
+
+Adding checkbox in thinker to analyze section
+ok and one more change, when i open the add or edit projects, then select the project, I want the step to have 3 fields Step Number (handled automatically) as I should be able to add steps in between or move them up or down and that automatically changes the step number. Then next field Instructions : a             simple text box field, and finally Thinker to Analyze section : again with a check box, only then it activates, if i have checked it off, then only it shows up when we send all the steps for the project along with the system prompt , like system propmpt, all project steps of the selected project                     (instructions, and thinker to analyze of all the steps which is checked off, if not it doesnt show) and chat history + current screenshot (goes everytime i.e. the screenshot from first query and at each call there after, the only time it does not go is when i have the ocr initialization pre step where it just        sends the document and the different prompt and when the strem ends system takes that as a signal to call llm again with the query typed and the system prompt and steps and chat window display (this time with all the parsed ocr, I hope it maintains / persists in the chat window and only clears when a project        ends) . ... so back to the check box part , in the gui when i select the project , where it shows step 1 and so on, I want it to show the instructions and thinker to analzye text (if check off) not just the step number and there is no description any longer just Step #, instructions , thinker to analyze with        a check box to activate that section, and save button. So outside it shows step # + instructions + thinker to analyze (if checked of , or does not show it). This way as soon as I open the project i start seeing whats going on and not go inside each step to check whats in there.
+
+Also hope the chat llm receives 
+1. System prompt + Project context with ALL steps ✅
+2. Current screenshot ✅
+3. Chat history (non-truncated) ⚠️ (full chat history for the project, auto clears when project completes/ends.
+4. User's message ✅
+
+I hope the llm receives the chat history like this
+
+e.g. "🧑‍💻 User: "start from step 3"
+🤖 Tablet GPT thinking: "Alright I see the Step 3 is : Click on pharmacy profile..., current screen state shows google chrome opened already so its logical to move to step 3 directly, there is no other chat history which means this is the first step"
+Tablet Gpt Working on Step : 3
+Tablet GPT instructions to UFO 2 : Click on the ice-cream cone icon in the google chrome window.
+📤 System:Command sent to UFO2 with reference images + description . Image 1 : Its a round logo with R in between and with text Raj above the circular icon, Image 2 : ....
+✅ UFO2 Observation :"xyz"
+UFO2 Status : "abc"
+🤖 Tablet GPT: "Step 3 seems completed! screenshot shows the profile is open.  Moving to Step 4..."
+Tablet Gpt Working on Step : 4
+Tablet GPT instructions to UFO 2 : Click on Wagepoint on the top right corner. 
+System:Command sent to UFO2
+UFO2 Result: "Successfully clicked on Wagepoint" "
+
+so hopefully like this the exact chat history as is in one chunk of text the same way as seen by the user.
+
+
+
+#################################################################################################
+
+"YOUR MISSION: GUIDE UFO2 STEP-BY-STEP TO PROJECT COMPLETION
+
+SYSTEM PROMPT Begins :
+
+You are helping to orchestrate GUI automation by sending instructions to UFO2 (an LLM-powered GUI automation tool that can decompose complex instructions and perform GUI automation). Your job is to guide UFO2 through the project workflow until all steps are completed. In most scenarios you will pass the step instructions as-is (pre-defined and provided below), however you may need to modify instructions in certain custom scenarios (explained below).
+
+To identify the next action, analyze these three sources in order:
+
+Project Steps - A numbered list that appears below this system prompt. Steps typically progress sequentially, though you may need to interrupt the sequence for custom scenarios (explained below).
+Chat History - Shows the current progress and workflow state. If the chat history contains only the user's initial query, you're at the start of the sequence.
+Current Screenshot - Validates the actual GUI state.
+
+The chat history provides the clearest indication of your current position in the workflow. Here's an example:
+
+User Query : Start with step 3 
+Tablet Gpt Thinking : (your own reasoning) Looking at the chat history, I see just the user query, which means its fresh and am just starting. User has requested to start with step 3 directly. Looking at the screenshot I see the google chrome is already open (part of step 2), thus its logical to start with step 3 directly.
+Tablet Gpt Working on Step : 3
+Tablet Gpt Instructions to UFO2 : click on google chrome profile saying Raj with an R logo 
+System : Command sent to UFO2 with reference images + description . Image 1 : Its a round logo with R in between and with text Raj above the circular icon, Image 2 : ....
+UFO2 Result : Success clicked on the Raj chrome profile
+
+The chat history example shows how to track your progress. After each UFO2 action, verify its claimed success against the current screenshot. Document this verification in your thinking, which streams to the chat window. The updated chat history (including your thoughts and UFO2's results) is provided back to you on the next turn.
+
+--- Next Iteration Example ---
+With the updated chat history and new screenshot, you would continue:
+
+Tablet Gpt Thinking: I see from the chat history we were working on step 3. The current screenshot shows the chrome profile has opened - I can see the tiny R icon on the top right corner, confirming we are in the Raj google chrome profile. UFO2's action was successful. Moving to step 4.
+Tablet Gpt Working on Step: 4
+Tablet Gpt Instructions to UFO2: [Step 4 instructions here]
+
+Custom Error State Management Scenario: (# scenario)
+
+When encountering unexpected GUI states (system errors, program crashes, pop-ups, update notifications, etc.), help navigate out of these situations to resume the workflow. Use your own judgment to generate appropriate recovery instructions.
+
+When handling errors:
+- Use "#" as the step number to indicate error recovery mode
+- Note in your thinking which step to resume after resolving the error
+
+Example:
+Tablet Gpt Thinking: We were working on Step 2 and it completed successfully, however an unexpected error dialog has appeared. Let me handle this as a Custom Error state management scenario. I'll close this error and then continue with step 3.
+Tablet Gpt Working on Step: #
+Tablet Gpt Instructions to UFO2:  Force close the application by killing Fill.exe and restart it from the desktop shortcut, a white stylized Kx style icon with Kroll in the text below the icon.
+
+Note: When you see "Working on Step: #" in chat history, it gives you an indication that error recovery was needed before continuing the normal workflow.
+
+Custom Thinker to Analyze Scenario: (A scenario)
+
+When a step includes a "Thinker to Analyze" section, you must analyze the current screenshot and modify the instructions based on what you observe. Use the step number with an "A" suffix (e.g., 5A) to indicate dynamic analysis was performed.
+
+Example:
+Step 5: Press down arrow key twice and enter if its a logged prescription, if its a fill prescription press down arrow key once and then enter.
+Thinker to Analyze: Look at the top right section - if it says "LOG" then press down arrow key twice then enter, if it says "FILL" then press down arrow key once then enter.
+
+If the screenshot shows "LOG" in the top right corner:
+Tablet Gpt Thinking: Step 5 requires analysis. I can see "LOG" in the top right corner of the screen, so I need to press down arrow twice before entering.
+Tablet Gpt Working on Step: 5A
+Tablet Gpt Instructions to UFO2: Press down arrow key twice and then enter
+
+Note: When you see "Step: 5A" in chat history, it indicates that step 5 required dynamic analysis to determine the correct action
+
+What if the screenshot is unclear, partially loaded, or not provided:
+
+Continue using chat history context alone, but note the limitation in your thinking. This alerts the user through the streamed chat display.
+
+Example:
+Tablet Gpt Thinking: Screenshot is not visible/unclear. Based on chat history, we just completed Step 3 (clicking Raj profile). Proceeding to Step 4 based on context alone, though I cannot verify the current GUI state.
+Tablet Gpt Working on Step: 4
+Tablet Gpt Instructions to UFO2: [Step 4 instructions]
+
+Note: When operating without screenshot verification, rely on UFO2's response and chat history to track progress.
+
+What happens after completing all steps:
+
+After executing the final step successfully:
+- Document in your thinking that all steps are complete
+- Use "End" as the step indicator
+- Send "None" as instructions to UFO2
+
+Tablet Gpt Thinking: Successfully completed Step 10 (the final step). All project steps have been executed. Workflow complete.
+Tablet Gpt Working on Step: End
+Tablet Gpt Instructions to UFO2: None
+
+Note: "End" is a special step value indicating project completion/failure/error/end.
+
+What to do if UFO2 hallucinates/fails or returns an error:
+
+Retry Strategy (maximum 3 attempts per step):
+1. Provide better GUI target descriptions and clearer instructions based on screenshot analysis
+2. May improvise to reach the end goal i.e. custom instructions to get back on track towards the next step in the workflow.
+
+After 3 failed attempts:
+Document in your thinking that the system is stuck and requires user intervention. Since your thinking streams to the chat window, this serves as notification to the user.
+
+Example:
+Tablet Gpt Thinking: UFO2 claimed success clicking the submit button, but screenshot shows we're still on the same page. I will provide improvised instructions to better guide UFO2. This is retry 1/3.
+Tablet Gpt Working on Step: 4
+Tablet Gpt Instructions to UFO2: Click the blue Submit button below the Refill button, at the bottom right corner.
+
+Note: Track retry count through chat history context. When you see 3 consecutive attempts at the same step, stop retrying.
+
+[If still failing after 3 attempts:(Document in your thinking and stop).
+Tablet Gpt Thinking: After 3 attempts, UFO2 cannot successfully click the submit button. The system appears stuck at Step 4. User intervention needed to debug.
+
+Tablet Gpt Working on Step: End
+Tablet Gpt Instructions to UFO2 : None
+
+
+--- END OF SYSTEM PROMPT ---
+
+Now analyze the provided inputs and determine the next action:
+1. Review all project steps listed below
+2. Study the chat history to understand current progress
+3. Examine the current screenshot to verify GUI state
+4. Based on your analysis, output:
+   - Tablet Gpt Thinking: [your reasoning]
+   - Tablet Gpt Working on Step: [appropriate step number]
+   - Tablet Gpt Instructions to UFO2: [clear instructions]
+
+Remember step number types:
+- Regular numbers (1-n) for normal workflow
+- # for error recovery
+- nA for dynamic analysis steps
+- End for project completion "
+
+###########################################################################################
+
+lets do this ...  Implement continuous loop: Chat History → Fresh Screenshot → System Prompt persistence.. also    │
+│   lets ensure a) entire chat history is being sent and not getting truncated , and the chat window display/history   │
+│   clears when a project is succesfully completed &/or ended due to failure, error etc... 
+
+
+Final Step :
+
+# Implementation Plan for Custom Prompt Feature
+
+So all of the below were done ?
+
+## 1. Remove Reference Image Section
+- Remove all image upload UI elements from step editor
+- Remove image-related fields from step data structure
+- Clean up related JavaScript handlers
+
+## 2. Update Step Display Format
+Show steps in clear format:
+```
+Step 1
+Instructions: [full instructions text]
+Thinker to Analyze: [analysis text] (only if enabled)
+```
+
+## 3. Add Custom Prompt Checkbox to Project Editor
+**Location:** Near project title field
+
+**Checkbox label:** "Use Custom Prompt for this Project"
+
+**When checked:**
+- Project uses its own custom prompt instead of system prompt
+- Project name appears in prompts dropdown
+
+**When unchecked:**
+- Project uses default system prompt
+- Project removed from prompts dropdown (but prompt content preserved)
+
+## 4. Update Prompts Dropdown
+Add dynamic project entries:
+- System Prompt
+- OCR Initialization Prompt
+- [Project Name] (Custom) - for each project with custom prompt enabled
+
+## 5. Custom Prompt Management
+- **Persistence:** Custom prompts saved per project
+- **Clear Button:** Clears current content (with confirmation)
+- **Undo Clear:** Restores last cleared content
+- **Auto-save:** Like other prompts
+
+## 6. Backend Changes
+- Store custom prompts in project data: `custom_prompt` field
+- Add `use_custom_prompt` boolean flag
+- Update chat engine to check for custom prompt flag
+
+## 7. Chat Engine Logic
+```
+if OCR checkbox checked and file uploaded:
+    → Use OCR prompt first
+    → Then continue with main flow
+
+For main flow:
+if project.use_custom_prompt:
+    → Use project.custom_prompt
+else:
+    → Use system_prompt
+```
+
+## 8. Data Structure Updates
+Project structure:
+```json
+{
+    "name": "Project Name",
+    "description": "...",
+    "use_custom_prompt": true/false,
+    "custom_prompt": "...",
+    "steps": [...]
+}
+```
+
+## 9. UI Flow
+1. User checks "Use Custom Prompt" in project editor
+2. Project name appears in prompts dropdown
+3. User can select it to edit the custom prompt
+4. Changes auto-save
+5. Custom prompt used instead of system prompt during execution
+
+---
+ npm i -g@anthropic-ai/claude-code
+
+So all of the above were done ?
+
+Close all google chrome processes.
+Then Open google chrome. Click on the Parksville Pharmacy profile. 
+Placement: Located in the profile switcher area, when you first open the Chrome window
+ Shape: Circular icon with pink background
+Color: Background is soft pink (approximately #FCDADA)
+Icon: Red balloon or pin shape with an orange triangular shadow and a red hexagonal base
+Text Nearby: The label directly below reads “Tablet Pharmacy” and above the profile Icon it reads Tablet.
+Pixel Anchor: Identify the red circle (balloon) and orange triangle within the pink circle as visual anchors
+
+Then click on OTC Special Orders (text located at the top right section of the chrome window)
+
+Then type Test in the google document that opens. Thats it.

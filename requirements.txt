@@ -1,0 +1,6 @@
+flask==3.0.0
+openai==1.55.3
+pyautogui==0.9.54
+pillow==10.4.0
+google-generativeai
+google-genai

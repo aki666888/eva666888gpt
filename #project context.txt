@@ -1,0 +1,134 @@
+# TabletGPT: Comprehensive Technical Architecture
+
+## 🎯 Core Intent
+TabletGPT is a **multi-step GUI automation system** that bridges natural language instructions with Windows desktop automation using Microsoft's UFO2 framework. It enables users to create reusable automation workflows through a chat interface with real-time visual feedback.
+
+## 🏗️ System Architecture
+
+### 1. **Frontend Layer** (`static/js/app.js`, `templates/index.html`)
+- **Terminal-style chat interface** - No bubbles, just copyable text
+- **Real-time SSE streaming** - Shows thinking, reasoning, and progress
+- **Project/workflow management** - Create, edit, reorder steps with images
+- **Debug & Prompts panels** - Live debugging and prompt history
+- **File upload support** - PDFs, docs, images for context
+- **Non-blocking UI** - Only disables inputs during processing
+
+### 2. **Flask Backend** (`app.py`)
+- **RESTful endpoints:**
+  - `/api/chat` - Standard request/response
+  - `/api/chat_stream` - SSE real-time streaming
+  - `/api/projects` - CRUD for workflows
+  - `/api/chat_with_file` - Multipart file handling
+- **Session management** - Tracks context between messages
+- **Document parsing** - Extracts text from PDFs/Word docs
+
+### 3. **Chat LLM Brain** (`chat_llm.py`)
+- **OpenAI GPT-4o integration** - Vision-enabled reasoning
+- **Screenshot capture** - Takes screenshots for every request
+- **Intent analysis** - Determines action type:
+  - `execute_step` - Run workflow step
+  - `direct_command` - One-off command
+  - `status_update` - Check progress
+- **Context management** - Tracks project, step number, history
+- **Streaming methods:**
+  - `process_message()` - Standard processing
+  - `process_message_streaming()` - Real-time updates
+
+### 4. **UFO2 Messenger** (`ufo2_messenger.py`)
+- **Command enhancement** - Injects step context automatically
+- **Image injection** - Adds `--image` parameter to UFO2
+- **Real-time streaming** - Reports UFO2 progress
+- **Error handling** - Graceful fallbacks
+
+### 5. **Workflow Manager** (`workflow_manager.py`)
+- **Project persistence** - JSON file storage
+- **Step management** - CRUD operations
+- **Image path handling** - Manages reference images
+
+### 6. **Configuration** (`config.py`)
+- **Single source of truth** - All API keys, paths
+- **Model switching** - Easy to change LLMs
+- **Environment settings** - UFO2 paths, timeouts
+
+## 🔄 Data Flow for Multi-Step Automation
+
+```
+1. User: "Start pharmacy login workflow"
+   ↓
+2. Frontend: Sends to /api/chat_stream with project context
+   ↓
+3. ChatLLM: 
+   - Takes screenshot
+   - Analyzes intent with GPT-4o
+   - Identifies Step 1: "Open Chrome with profile"
+   - Returns basic command only
+   ↓
+4. UFO2Messenger:
+   - Gets basic command: "Open Chrome"
+   - Injects step context:
+     * reference_image: "step_1_chrome.png"
+     * custom_directions: "Use Parksville profile"
+     * image_description: "Chrome icon on desktop"
+   - Executes: python -m ufo --request "Open Chrome..." --image "path/to/image.png"
+   ↓
+5. UFO2: 
+   - Takes screenshot
+   - Compares with reference image
+   - Finds Chrome icon
+   - Clicks it
+   - Returns success
+   ↓
+6. Stream Updates (Real-time):
+   - "🧠 AI: Analyzing screenshot..."
+   - "💭 Identified Step 1 of 5"
+   - "🤖 TabGPT: Opening Chrome with pharmacy profile"
+   - "📤 System: Command sent to UFO2 with reference image"
+   - "⚡ UFO2: Clicking Chrome icon at coordinates (x,y)"
+   - "✅ Step 1 completed! Moving to Step 2..."
+```
+
+## 🔑 Key Technical Details
+
+### Separation of Concerns:
+- **ChatLLM**: Only reasoning and basic commands
+- **Messenger**: Technical implementation (images, paths)
+- **UFO2**: Low-level Windows automation
+
+### Context Preservation:
+- Full chat history (no 200-char truncation)
+- Includes AI reasoning in context
+- Sequential message arrays for replay
+- Step-by-step progress tracking
+
+### Real-time Features:
+- SSE streaming (not fake delays)
+- Live reasoning display in chat
+- Progress indicators for each phase
+- Cancellable operations
+
+### Multi-Step Workflow:
+1. **Project Creation**: Define steps with descriptions, images, custom directions
+2. **Step Execution**: Each step can have:
+   - Description (what to do)
+   - Reference image (visual target)
+   - Custom directions (special instructions)
+   - Image description (element identification)
+3. **Progress Tracking**: Current step, success/failure, auto-advance
+4. **Error Recovery**: Can retry failed steps with modifications
+
+## 💪 Benefits for GUI Automation
+
+1. **Visual Reliability**: Reference images ensure correct element targeting
+2. **Natural Language**: No coding required, just describe what you want
+3. **Reusability**: Save workflows as projects, run them anytime
+4. **Flexibility**: Mix workflow steps with direct commands
+5. **Debugging**: See exactly what the AI sees and thinks
+6. **Context Aware**: Maintains state across multi-step processes
+7. **Real-time Feedback**: Know exactly what's happening as it happens
+
+
+User says: "Type medication review for logan,robrt"
+System: Executes all the defined steps automatically with visual verification
+```
+
+The architecture ensures each component has a focused responsibility while maintaining seamless communication through well-defined interfaces. The real-time streaming keeps users informed, while the visual reference system ensures accuracy in GUI automation tasks.

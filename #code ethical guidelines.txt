@@ -1,0 +1,18 @@
+General Code Ethical Guidelines
+1. The code should be succinct and lean
+2. It should be effective and fruitful.
+3. We just need to work on core functionalities to make it work.
+4. Edits should be with surgical precision, laser focused code only.
+5.The aim is to keep the structure lean and elegant and achieve maximum effectiveness.
+6. I am using everything on windows and want to make it work in windows environment only.
+7. Everything should point to config.py so that its the single source of truth and super simple to swap models and make any settings changes.
+8.Not to focus on adding extra length to script for reasons not related to core-functionality and functioning e.g. fall backs etc…
+9. Once edits are complete, help run it through a test.py or something in a way that it executes, simulates a user style query , gets the response from llm or any error to display and exits so you can see if it's actually working
+10. Be mindful of clearing any test scripts created along the way , otherwise my codebase starts to look too messy.
+11. The architecture should have sufficient number of scripts but not too many scripts, each script with its separate role and functionality, so we don’t have to search everywhere, and for that components others can be just pointing
+to that script.
+12. No fall backs, only focus on original functionalities and llms, if one fails thats it no other.
+13. Create a .bat file to run the program and such a way that it asks for admin privileges at start via the windows os itself
+14. Keep everything async and implement all techniques to keep things as super responsive as possible.
+15. Be mindful of clearing any test scripts created along the way , otherwise my codebase starts to look too messy. With the End of your work, double check the directory and delete any useless scripts to keep the code base lean and clean.Leave the folders and scripts starting with # untouched.
+
